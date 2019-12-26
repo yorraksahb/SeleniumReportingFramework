@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Test Suite" verbose="1">
+	<listeners>
+		<listener class-name="com.roy.selext.testngsel.base.TestListener" />
+	</listeners>
+	<parameter name="browserType" value="chrome" />
+	<parameter name="appURL" value="https://google.com" />
+
+	<test name="Admin Tests">
+		<classes>
+			<class name="com.roy.selext.testngsel.BasePageTest" />
+			<class name="com.roy.selext.testngsel.SignInPageTest" />
+			<class name="com.roy.selext.testngsel.CreateAccountTest" />
+		</classes>
+	</test>
+</suite>
