@@ -1,15 +1,18 @@
 package com.roy.selext.testngsel.base;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ExtentManager {
     private static ExtentReports extent;
-    private static String reportFileName = "Test-Automaton-Report"+".html";
+    private static Calendar calendar = Calendar.getInstance();
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+    private static String reportFileName = "Test-Automaton-Report"+ formatter.format(calendar.getTime())+".html";
     private static String fileSeperator = System.getProperty("file.separator");
     private static String reportFilepath = System.getProperty("user.dir") +fileSeperator+ "TestReport";
     private static String reportFileLocation =  reportFilepath +fileSeperator+ reportFileName;
@@ -26,8 +29,6 @@ public class ExtentManager {
         String fileName = getReportPath(reportFilepath);
        
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
-        htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
-        htmlReporter.config().setChartVisibilityOnOpen(true);
         htmlReporter.config().setTheme(Theme.STANDARD);
         htmlReporter.config().setDocumentTitle(reportFileName);
         htmlReporter.config().setEncoding("utf-8");

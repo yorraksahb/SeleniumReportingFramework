@@ -11,7 +11,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.io.FileHandler;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -23,7 +22,7 @@ import com.aventstack.extentreports.Status;
 public class TestListener implements ITestListener {
 	public WebDriverEventListener eventListener;
 
-	public static final Logger log= Logger.getLogger(TestListener.class.getName());
+	public static final Logger log = Logger.getLogger(TestListener.class.getName());
 
 	public void onStart(ITestContext context) {
 		System.out.println("*** Test Suite " + context.getName() + " started ***");
@@ -55,13 +54,12 @@ public class TestListener implements ITestListener {
 	public void onTestFailure(ITestResult result) {
 		log.info("*** Test execution " + result.getMethod().getMethodName() + " failed...");
 		log.info((result.getMethod().getMethodName() + " failed!"));
-		
+
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
 
-		ITestContext context = result.getTestContext();
-		WebDriver driver = (WebDriver) context.getAttribute("driver");
-//		EventFiringWebDriver dr = new EventFiringWebDriver(driver);
+		Object currentClass = result.getInstance();
+		WebDriver driver = ((TestBase) currentClass).getDriver();
 		String targetLocation = null;
 
 		String testClassName = (result.getInstanceName()).trim();
@@ -74,7 +72,7 @@ public class TestListener implements ITestListener {
 		log.info("test class name -> " + testClassName);
 		try {
 			File file = new File(reportsPath + fileSeperator + testClassName); // Set ScreenShot Folder
-			log.info("File creation "  + file);
+			log.info("File creation " + file);
 			if (!file.exists()) {
 				if (file.mkdirs()) {
 					log.info("Directory: " + file.getAbsolutePath() + " is created!");
@@ -86,14 +84,15 @@ public class TestListener implements ITestListener {
 
 			File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			log.info("1 " + screenshotFile);
-			
-			targetLocation = reportsPath + fileSeperator + testClassName + fileSeperator + screenShotName;// define location
+
+			targetLocation = reportsPath + fileSeperator + testClassName + fileSeperator + screenShotName;// define
+																											// location
 			log.info("2 " + targetLocation);
-			
+
 			File targetFile = new File(targetLocation);
 			log.info("Screen shot file location - " + screenshotFile.getAbsolutePath());
 			log.info("Target File location - " + targetFile.getAbsolutePath());
-			
+
 			FileHandler.copy(screenshotFile, targetFile);
 
 		} catch (FileNotFoundException e) {
@@ -111,6 +110,7 @@ public class TestListener implements ITestListener {
 		}
 		ExtentTestManager.getTest().log(Status.FAIL, "Test Failed");
 	}
+
 	public void onTestSkipped(ITestResult result) {
 		System.out.println("*** Test " + result.getMethod().getMethodName() + " skipped...");
 		ExtentTestManager.getTest().log(Status.SKIP, "Test Skipped");

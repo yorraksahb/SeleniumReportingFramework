@@ -2,6 +2,7 @@ package com.roy.selext.testngsel;
 
 import java.io.FileInputStream;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -45,9 +46,9 @@ public class ExcelReader {
 				for (int j = 0; j < totalCol; j++) {
 					XSSFCell cell = rows.getCell(j);
 
-					if (cell.getCellType() == cell.CELL_TYPE_STRING)
+					if (cell.getCellType() == CellType.STRING)
 						datasets[i - 1][j] = cell.getStringCellValue();
-					else if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
+					else if (cell.getCellType() == CellType.NUMERIC) {
 						String cellText = String.valueOf(cell.getNumericCellValue());
 						datasets[i - 1][j] = cellText;
 					} else
@@ -77,9 +78,9 @@ public class ExcelReader {
 			row = sheet.getRow(rowNum -1);
 			
 			XSSFCell cell=row.getCell(col_Num);
-			if (cell.getCellType()==cell.CELL_TYPE_STRING){
+			if (cell.getCellType()==CellType.STRING){
 				return cell.getStringCellValue();
-			} else if (cell.getCellType()==cell.CELL_TYPE_BLANK){
+			} else if (cell.getCellType()==CellType.BLANK){
 				return "";
 			}
 		} catch (Exception e) {
