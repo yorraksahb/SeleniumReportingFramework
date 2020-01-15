@@ -5,13 +5,11 @@
 		<listener class-name="com.roy.selext.testngsel.base.TestListener" />
 	</listeners>
 	<parameter name="browserType" value="chrome" />
-	<parameter name="appURL" value="https://google.com" />
+	<parameter name="appURL" value="http://mail.yahoo.com" />
 
 	<test name="Admin Tests">
 		<classes>
-			<class name="com.roy.selext.testngsel.BasePageTest" />
-			<!-- <class name="com.roy.selext.testngsel.SignInPageTest" />
-			<class name="com.roy.selext.testngsel.CreateAccountTest" /> -->
+			<class name="com.roy.selext.testngsel.LoginPageTest" />
 		</classes>
 	</test>
 </suite>
